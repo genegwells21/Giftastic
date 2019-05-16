@@ -1,72 +1,61 @@
-var authors =   [
+var authors = [
     "Jack Canfield", "Brian Tracy", "Mark Victor Hansen", "John Maxwell", "Bob Proctor", "John Assaraf", "Napoleon Hill", "W. Clement Stone", "Philip C. McGraw", "Joe Vitale"
-    ]
+];
 
-$(document).ready(function()    {
+$("#find-authors").on("click", function(event)  {
 
-    function    integrateAuthors()  {
-        $('.button-section').empty();
+    event.preventDefault();
 
-        for (var i=0; i <authors.length; i++)   {
+    var Bob = $("#author-input").val();
 
-        var showButtons = $('<button type="button" class="btn-md btn-primary" value="" data-toggle="button" aria-pressed="false" autocomplete="off">' + authors[i] + '</button>');
-        showButtons.attr('data-name', authors[i]);
-        showButtons.addClass("gifClass");
-        $('button-section').append(showButtons)
+    $("#author-input").val("");
+    authors.push(Bob.trim());
+    renderButtons();
+});
 
+function renderButtons()    {
+        $("#authorButtons").empty();
+            for (i = 0; i < authors.length; i++)    {
+                $("#authorButtons").append("<button class='add authors btn btn-primary' style='margin:10px;'>" +authors[i] + "</button>")
+            }
+}
+
+$(document).on("click", ".add-foods", getauthorInfoFromApi);
+
+function getauthorInfoFromApi() {
+    var authorInfo  = "";
+    var queryURL    = ""
+    $.ajax({
+            url: 'api.giphy.com/v1/gifs/search?api_key=lLUfXezLB8DLZldBrzJ2XY7t5u6PN24M?q="Bob Proctor"', 
+            method: 'GET'}).done(function(response){displayAuthorInfo(response);    }""
+}
+
+renderButtons();
+
+var myID = 0;
+
+function displayAuthorInfo(response)    {
+    $("#author-view").empty();
+    var imageArray = response.data;
+    var myHTML = "";
+    for (i = 0; i < imageArray.length; i++) {
+    var rating= imageArray[i].rating;
+    if
+    }
+}
+
+$(document.body).on("click", "img", function()  {
+    var isAnimated = $(this).attr("isAnimated");
+    if (isAnimated ==null || isAnimated=='' )   {
+        isAnimated = "false";
     }
 
-    $(".gifClass").on('click', function()   {
-        $('.gifsChoice').html("")
-        var clickTitle = $(this).data('name');
+if(isAnimated=="true"){
+    $(this).attr("src", $(this).attr("stillSrc"));
+    $(this).attr("isAnimated", "false");
 
-        var queryURL = 'https://api.giphy.com/v1/gifs/search?q='&api_key=dc6zaTOxFJmzC'' + clickTitle + '';
-
-        function displayRandomGif()    {
-            $.ajax({
-                url: queryURL,
-                method: 'GET'
-            })
-
-
-        .done(function(response)    {
-            console.log(response)
-            var results = response.data;
-            var gifDiv= $('<div class="choices">');
-            var gif = $('<img>');
-            gif.addClass("gifClass");
-            gif.attr('data-state', 'still');
-            gif.attr('src', results.image_original_url+"_s");
-            gif.attr('data-still', results.image_original_url+"_s");
-            gif.attr('data-animate', results.image_originial_url+"_s");
-            $('gifChoice').prepend(gif)
-
-            });
-
-            }
-        
-        for (var i = 0; 1 < 10; i++)    {
-            showRandomGif();
-            }
-        
-    $('gifClass').on('click', function()    {       
-        var state = $(this).attr('data-state')
-
-        if (state == 'still')   {
-            $(this).attr('src', $(this).data('animate'));
-            $(this).attr('data-state', 'animate');
-        }   else    {
-            $(this).attr('src', $(this).data('still'));
-            $(this).attr('data-state', 'still');
-        }
-        integrateAuthors()
-
-        $('submit').on('click', function()  {
-            var search = $('#authorSearch').val().trim();
-                authors.push(search);
-            integrateAuthors();
-        
-                return false;
-
-        });
-    });
+} else{
+    $(this).attr("src", $(this).attr("animatedSrc"));
+    $(this).attr("isAnimated", "true");
+}
+});
