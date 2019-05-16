@@ -27,7 +27,7 @@ function getauthorInfoFromApi() {
     var queryURL    = ""
     $.ajax({
             url: 'api.giphy.com/v1/gifs/search?api_key=lLUfXezLB8DLZldBrzJ2XY7t5u6PN24M?q="Bob Proctor"', 
-            method: 'GET'}).done(function(response){displayAuthorInfo(response);    }""
+            method: 'GET'}).done(function(response){displayAuthorInfo(response);    }
 }
 
 renderButtons();
